@@ -1,0 +1,387 @@
+
+
+.page-title { 
+    font-family: 'Caveat', cursive;
+font-family: 'Inter', sans-serif;
+font-family: 'Kaisei Tokumin', serif;
+font-family: 'Libre Baskerville', serif;
+text-align: center;
+font-size: 6rem;
+margin-top: 0px;
+margin-bottom: 5px;
+}
+
+* { 
+    box-sizing: border-box;
+}
+
+html { 
+    min-height: 100vh;
+}
+
+body { 
+    margin: 0;
+    background: radial-gradient(#fffbfa, darkgray);
+}
+
+.game-info {
+    font-family: 'Caveat', cursive;
+font-family: 'Inter', sans-serif;
+font-family: 'Kaisei Tokumin', serif;
+font-family: 'Libre Baskerville', serif;
+text-align: center;
+font-size: 3rem;
+display: inline-block;
+margin: 10px;
+}
+
+.game-container { 
+    display: grid; 
+    grid-template-columns: repeat(6, auto);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-bottom: 50px;
+    perspective: 500px;
+    
+}
+
+.game-info-container { 
+    grid-column: 1/ -1;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* main card*/
+.card { 
+    width: 125px;
+    height: 175px; 
+    cursor: pointer;
+    position: relative;
+}
+
+.card-face { 
+    position: absolute;
+    width: 100%; 
+    height: 100%;
+    display: flex; 
+    justify-content: center;
+    text-align: center; 
+    backface-visibility: hidden;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: orange;
+    transition: transform 500ms ease-in-out;
+}
+
+.card-frame {
+    position: absolute;
+    height: 90px; 
+    width: auto;
+    transition: width 100ms ease-in-out, height 100ms ease-in-out;
+}
+
+/*back of card*/ 
+
+.card-back { 
+    background-color: black;
+}
+
+.card-back:hover .card-frame {
+    width: auto;
+    height: 100px;
+}
+
+.back-frame-top { 
+    top: 0;
+    left: 0;
+}
+
+.back-frame-bottom { 
+    transform: rotate(180deg);
+    bottom: 0;
+    right: 0;
+}
+
+.cloud-cover {
+    align-self: center;
+    height: 70px;
+    width: auto;
+    transition: transform 100ms ease-in-out;
+}
+
+.card-back:hover .cloud-cover { 
+    transform: scale(1.2);
+}
+
+.card.visible .card-back{
+    transform: rotateY(-180deg);
+}
+
+/*front of card*/
+
+.card-front {
+    transform: rotateY(180deg);
+    background-color: aliceblue;
+}
+
+.card.visible .card-front{
+    transform: rotateY(0);
+}
+
+.front-frame-top {
+    transform: rotate(90deg);
+    right: 0;
+    top: 0;
+}
+
+.front-frame-bottom {
+    transform: rotate(270deg);
+    left: 0;
+    bottom: 0;
+}
+
+.character {
+    align-self: center;
+    height: 110px;
+    width: auto;
+    transition: transform 100ms ease-in-out;
+}
+
+.card-front:hover .card-frame { 
+    width: auto;
+    height: 100px;
+    transition: width 100ms ease-in-out, height 100ms ease-in-out;
+}
+
+.card-front:hover .character {
+    transform: scale(1.1);
+}
+
+/* matched cards */
+.card.matched .character { 
+    animation: dance 0.5s linear infinite 500ms;
+}
+
+@keyframes dance {
+    0%, 100% { 
+        transform: rotate(0);
+    } 
+    25% { 
+        transform: rotate(-10deg);
+    }
+    75% { 
+        transform: rotate(10deg);
+    }
+}
+
+/* overlays */
+
+.overlay-text { 
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+    Justify-content: center;
+    align-items: center;
+    z-index: 100;
+    color: #b2beb5;
+    font-family: 'Kaisei Tokumin', serif;
+}
+
+.overlay-text.visible{ 
+    display: flex;
+    flex-direction: column;
+    animation: overlay-grow 500ms forwards;
+}
+
+.overlay-text-small { 
+    font-size: .3em;
+}
+
+@keyframes overlay-grow { 
+    from { 
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0;
+    } to {
+        background-color: rgba(0, 0, 0, 0.8);
+        font-size: 6em;
+    }
+}
+
+#game-start-image {
+    width: 400px;
+    height: auto;
+    position: absolute;
+    right: 0;
+    animation: run 1000s linear 2s;
+}
+
+@keyframes run {
+     0%, 100% {
+        transform: translateX(-1030px);
+    } 
+}
+
+
+#game-over-image {
+    width: 400px;
+    height: auto;
+    right: 0;
+    animation: game-over 1s linear;
+}
+
+@keyframes game-over {
+    0%, 100% { 
+        transform: rotate(0);
+    } 
+    25% { 
+        transform: rotate(-5deg);
+    }
+    75% { 
+        transform: rotate(5deg);
+    }
+}
+
+#victory-image { 
+    width: 400px;
+    height: auto;
+    animation: victory 1s linear;
+}
+
+@keyframes victory {
+    0%, 100% { 
+        transform: scale(0.8);
+    } 
+    25% { 
+        transform: scale(1.5);
+    }
+    75% { 
+        transform: scale(1.7);
+    }
+}
+
+/* scaling */
+
+@media (max-width: 600px) {
+    .game-container { 
+        grid-template-columns: repeat(3, auto);
+    }
+
+    .game-info-container {
+        flex-direction: column;
+        align-items: center;
+        font-size: 
+    }
+
+    .page-title { 
+        font-size: 3rem;
+    }
+
+    .game-info-container { 
+        display: inline;
+        text-align: center;
+    }
+    
+    .game-info {
+        font-size: 35px;
+    }
+
+    .overlay-text {
+        text-align: center;
+        
+    }
+
+    .overlay-title { 
+        font-size: 50px;
+    }
+
+    #game-start-image {
+        width: 200px;
+        height: auto;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        animation: run 1000s linear 2s;
+    }
+    
+    @keyframes run {
+         0%, 100% {
+            transform: translateX(-200px);
+        } 
+    }
+
+    #game-over-image { 
+        width: 200px;
+        height: auto;
+    }
+
+    #victory-image { 
+        width: 200px;
+        height: auto;
+    }
+}
+
+@media (max-width: 400px) {
+    .game-container { 
+        grid-template-columns: repeat(2, auto);
+    }
+
+    .game-info-container {
+        flex-direction: column;
+        align-items: center;
+        font-size: 
+    }
+
+    .page-title { 
+        font-size: 2rem;
+    }
+
+    .game-info-container { 
+        display: inline;
+        text-align: center;
+    }
+    
+    .game-info {
+        font-size: 30px;
+    }
+
+    .overlay-text {
+        text-align: center;
+    }
+
+    .overlay-text-small { 
+        font-size: 20px;
+    }
+
+    .overlay-title { 
+        font-size: 35px;
+    }
+
+    #game-start-image {
+        width: 200px;
+        height: auto;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        animation: run 1000s linear 2s;
+    }
+    
+    @keyframes run {
+         0%, 100% {
+            transform: translateX(-200px);
+        } 
+    }
+
+    #game-over-image { 
+        width: 200px;
+        height: auto;
+    }
+
+    #victory-image { 
+        width: 200px;
+        height: auto;
+    }
+}
